@@ -11,7 +11,7 @@
 ## 🚀 Link de Acesso em Produção
 
 - **Aplicação no ar:** [https://app-curso-henrique-2026.web.app](https://app-curso-henrique-2026.web.app)
-- **Repositório GitHub:** [https://github.com/Henriquebfelix/focoum](https://github.com/Henriquebfelix/focoum)
+- **Repositório GitHub:** [https://github.com/Henriquebfelix/Focoum-Curso](https://github.com/Henriquebfelix/Focoum-Curso)
 
 ---
 
