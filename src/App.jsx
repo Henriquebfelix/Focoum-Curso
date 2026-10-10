@@ -3,6 +3,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import { TaskProvider } from './context/TaskContext';
 import { TimerProvider } from './context/TimerContext';
+import { useAuth } from './context/AuthContext';
 import Header from './components/layout/Header';
 import Toast from './components/common/Toast';
 import NewTaskModal from './components/tasks/NewTaskModal';
@@ -13,8 +14,11 @@ import FocusSessionScreen from './screens/FocusSessionScreen';
 import NightReviewScreen from './screens/NightReviewScreen';
 import WeeklyAnalyticsScreen from './screens/WeeklyAnalyticsScreen';
 import OnboardingScreen from './screens/OnboardingScreen';
+import AuthGateScreen from './screens/AuthGateScreen';
 
 function AppContent() {
+  const { user, loading } = useAuth();
+
   const [currentScreen, setCurrentScreen] = useState(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -29,6 +33,25 @@ function AppContent() {
     }
     return false;
   });
+
+  // Tela de carregamento enquanto verifica a sessão do usuário
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#F9F9FF] dark:bg-[#0B1120] flex flex-col items-center justify-center p-4">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 rounded-full border-2 border-gray-200 dark:border-gray-800 border-t-[#0D9488] animate-spin"></div>
+          <span className="text-xs font-semibold text-gray-700 dark:text-gray-300 tracking-wide">
+            Carregando sua atenção plena...
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  // Se o usuário não estiver logado com Google, bloqueia e exibe a tela de login obrigatório
+  if (!user) {
+    return <AuthGateScreen />;
+  }
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0B1120] text-[#151C27] dark:text-[#F8FAFC] flex flex-col font-sans transition-colors duration-200">
