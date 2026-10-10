@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-container":"#f4fffb","primary-fixed-dim":"#6bd8cb","tertiary":"#00685d","on-secondary-fixed":"#141b2b","outline":"#6d7a77","on-primary-container":"#f4fffc","secondary":"#575e70","inverse-on-surface":"#ebf1ff","surface-container-low":"#f0f3ff","tertiary-fixed":"#71f8e4","primary-fixed":"#89f5e7","secondary-fixed-dim":"#c0c6db","error-container":"#ffdad6","on-error-container":"#93000a","on-secondary-fixed-variant":"#404758","surface-container-highest":"#dce2f3","primary-container":"#008378","on-surface-variant":"#3d4947","on-primary-fixed-variant":"#005049","background":"#f9f9ff","on-background":"#151c27","surface-bright":"#f9f9ff","surface-container":"#e7eefe","secondary-fixed":"#dce2f7","on-tertiary-fixed":"#00201c","error":"#ba1a1a","on-secondary":"#ffffff","outline-variant":"#bcc9c6","surface-tint":"#006a61","on-secondary-container":"#5c6274","surface-container-high":"#e2e8f8","on-tertiary":"#ffffff","surface-container-lowest":"#ffffff","on-error":"#ffffff","surface-dim":"#d3daea","inverse-surface":"#2a313d","surface-variant":"#dce2f3","primary":"#00685f","tertiary-fixed-dim":"#4fdbc8","on-primary-fixed":"#00201d","inverse-primary":"#6bd8cb","on-surface":"#151c27","surface":"#f9f9ff","on-primary":"#ffffff","on-tertiary-fixed-variant":"#005048","tertiary-container":"#008376","secondary-container":"#d9dff5"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","margin-mobile":"1.25rem","margin":"3rem","space-sm":"0.5rem","space-xs":"0.25rem","space-md":"1rem","gutter":"1.5rem","space-xl":"2.5rem","gutter-mobile":"1rem"},"fontFamily":{"display-mobile":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"title":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"]},"fontSize":{"display-mobile":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"600"}],"display":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"22px","letterSpacing":"0em","fontWeight":"400"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"26px","letterSpacing":"-0.005em","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"500"}],"title":["18px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"500"}],"headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"500"}],"headline-lg-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"500"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.015em","fontWeight":"500"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(0,0,0,0.02)]"><div class="h-16 w-full px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md flex-shrink-0"><img alt="FocoUm Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WejZHfbkKrjsuH_XKIq-UZGn7iWe7dWAbN53x5zp2fUMbfHl2qbeWC9huxD5_fWDEVF2shbJl44-TKytHx3j3pgIyJ72cm4jeAMH9tUVVV-agiuhGDI2Ral2GoqZEpeYdboOoCZb-7ZfwV7ToCoiYhBDR98lXGU00axEx8PsZuvPJTBQ6lFKZiM89luTX1zSWJ2M6UDll1ulySCp1Kmu7Ud-Guz6B8-6cXHXKpQ8CTIAMO3XeJgbgJtss"/><span class="font-title text-title text-on-surface tracking-tight font-semibold hidden sm:inline">FocoUm</span></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-surface-container-high text-on-surface font-label-md font-medium rounded-lg"><a aria-current="page" class="px-space-sm py-space-xs transition-colors bg-surface-container-high text-on-surface font-label-md font-medium rounded-lg" data-path="hoje" href="#">Hoje</a><a class="px-space-sm py-space-xs text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-path="sessao-de-foco" href="#">Sessão de Foco</a><a class="px-space-sm py-space-xs text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-path="revisao-noturna" href="#">Revisão Noturna</a><a class="px-space-sm py-space-xs text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-path="visao-semanal" href="#">Visão Semanal</a><a class="px-space-sm py-space-xs text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors" data-path="onboarding-setup" href="#">Onboarding / Setup</a></nav><div class="flex items-center gap-space-md flex-shrink-0"><div class="hidden md:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low border border-outline-variant/40"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant tracking-wide">Modo Foco pronto</span></div><button aria-label="Alternar tema" class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" type="button"><span class="material-symbols-outlined text-[20px]">light_mode</span></button><button class="hidden sm:flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg border border-primary/30 text-primary hover:bg-primary-container hover:text-on-primary-container transition-all" type="button"><span class="material-symbols-outlined text-[18px]">play_arrow</span><span class="font-label-md text-label-md">Iniciar Pomodoro</span></button><div class="flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmxgpJr8y_7Dy8458d9OWoIzCBHpgLXdglcdPF47SC_LS0Sog54a6pJ9RoKMNV8yVfIAwWD2h7ydWTVTZZO5m2_IuZdffX0sMAgpHnx8RRcGEHW8K-uOHnHNBmh924goUiESFwSlnSAvIAHPWK0gM49hfs0GMiosEiijswRM9iHFeByn3uaLy-HNOPVgMVQqYgp5volI3enupjL67USwh_AlXZdS_rBYyvMBMQMOFgbK6BSpMz93EQ"/></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-4rem)] flex flex-col"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1100px] mx-auto px-gutter py-space-lg md:py-space-xl flex flex-col gap-space-xl">
+<!-- Top Quiet Welcome & Flow State Status -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
+<div class="flex flex-col gap-space-xs max-w-xl">
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-semibold">Hoje</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-md text-label-md">Terça-feira, 24 de Outubro</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Clareza antes da velocidade.
+        </h1>
+<p class="font-body-lg text-body-lg text-secondary">
+          O que realmente move a agulha hoje? Apenas três compromissos essenciais com a sua atenção profunda.
+        </p>
+</div>
+<!-- Mindful Pulse / 3 Dots Indicator -->
+<div class="flex flex-col sm:items-end gap-space-xs bg-surface-container-low px-space-md py-space-sm rounded-xl">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Capacidade Vital:</span>
+<div aria-label="Progresso: 2 de 3 focos definidos" class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary" title="Foco 1: Em execução"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-primary-fixed-dim" title="Foco 2: Na fila"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary-container" title="Foco 3: Na fila"></span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+          2 de 3 sessões planejadas para o ciclo atual
+        </p>
+</div>
+</section>
+<!-- Main Working Grid: 3 Vital Focuses + Integrated Ambient Timer -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Primary Spine: The 3 Vital Tasks (8 Cols) -->
+<section class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-title text-title text-on-surface font-semibold">Foco do Dia</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant">3 tarefas máx</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">lock</span>
+            Limite rigoroso ativo
+          </span>
+</div>
+<!-- Task 1: CURRENT ACTIVE FOCUS (Elevation Level 2) -->
+<article class="relative flex flex-col gap-space-md p-space-md md:p-space-lg bg-surface-container-lowest rounded-xl shadow-md transition-all">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-primary rounded-l-xl"></div>
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="px-2.5 py-1 rounded-md bg-surface-container-low text-primary font-label-sm text-label-sm font-medium">
+                Engenharia
+              </span>
+<span class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                3 blocos (75m)
+              </span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span class="font-label-sm text-label-sm font-semibold text-primary">EM FOCO</span>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<button aria-label="Concluir tarefa principal" class="w-6 h-6 mt-1 flex-shrink-0 rounded-full bg-surface-container-low flex items-center justify-center text-transparent hover:text-outline hover:bg-surface-container transition-all" onclick="toggleTaskStatus(this)" type="button">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+<div class="flex flex-col gap-1 min-w-0">
+<h2 class="font-headline-md text-headline-md text-on-surface font-medium leading-snug">
+                Finalizar arquitetura de dados do novo módulo
+              </h2>
+<p class="font-body-md text-body-md text-secondary line-clamp-2">
+                Consolidar diagramas de fluxo, validar contratos de API GraphQL e fechar migrações PostgreSQL com equipe de infra.
+              </p>
+</div>
+</div>
+<!-- Micro Progress & Quick Session Launcher -->
+<div class="pt-space-sm flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-32 h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-500" style="width: 33%"></div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sessão 1 de 3</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md font-medium transition-colors shadow-sm" onclick="syncMainTimer(25, 0, 'Finalizar arquitetura de dados')" type="button">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+<span>Continuar Foco (25:00)</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Task 2: PENDING FOCUS #2 -->
+<article class="flex flex-col gap-space-sm p-space-md bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded-md bg-surface-container-low text-secondary font-label-sm text-label-sm font-medium">
+                Pesquisa / Mestrado
+              </span>
+<span class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                2 blocos (50m)
+              </span>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="syncMainTimer(25, 0, 'Revisar artigo científico')" title="Iniciar este foco agora" type="button">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+</button>
+</div>
+<div class="flex items-start gap-space-sm">
+<button aria-label="Concluir tarefa" class="w-5 h-5 mt-1 flex-shrink-0 rounded-full bg-surface-container-low flex items-center justify-center text-transparent hover:text-outline transition-colors" onclick="toggleTaskStatus(this)" type="button">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</button>
+<div class="flex flex-col">
+<h3 class="font-title text-title text-on-surface font-normal">
+                Revisar artigo científico sobre aprendizado distribuído
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Identificar gaps teóricos na seção 3 e alinhar com notas do Orientador.
+              </p>
+</div>
+</div>
+</article>
+<!-- Task 3: PENDING FOCUS #3 -->
+<article class="flex flex-col gap-space-sm p-space-md bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded-md bg-surface-container-low text-secondary font-label-sm text-label-sm font-medium">
+                Consultoria
+              </span>
+<span class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+                1 bloco (25m)
+              </span>
+</div>
+<button class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" onclick="syncMainTimer(25, 0, 'Alinhar escopo com cliente Alpha')" title="Iniciar este foco agora" type="button">
+<span class="material-symbols-outlined text-[20px]">play_circle</span>
+</button>
+</div>
+<div class="flex items-start gap-space-sm">
+<button aria-label="Concluir tarefa" class="w-5 h-5 mt-1 flex-shrink-0 rounded-full bg-surface-container-low flex items-center justify-center text-transparent hover:text-outline transition-colors" onclick="toggleTaskStatus(this)" type="button">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</button>
+<div class="flex flex-col">
+<h3 class="font-title text-title text-on-surface font-normal">
+                Alinhar escopo de entrega com cliente Alpha
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Definir matriz de prioridades para o sprint de homologação de novembro.
+              </p>
+</div>
+</div>
+</article>
+<!-- Discipline Guardrail Action -->
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant">
+<button class="flex items-center gap-1.5 font-label-md text-label-md text-secondary hover:text-on-surface transition-colors py-1" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_vert</span>
+<span>Reordenar prioridades vitais</span>
+</button>
+<div class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px]">info</span>
+<span>Slots do dia preenchidos</span>
+</div>
+</div>
+</section>
+<!-- Secondary Spine: Quiet Ambient Pomodoro Panel (5 Cols) -->
+<aside class="lg:col-span-5 flex flex-col gap-space-md">
+<div class="p-space-lg bg-surface-container-lowest rounded-xl shadow-md flex flex-col items-center text-center">
+<div class="w-full flex items-center justify-between mb-space-sm">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-medium">Ciclo Ativo</span>
+<div class="flex items-center gap-1 bg-surface-container-low px-2.5 py-1 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">25m Imersão</span>
+</div>
+</div>
+<!-- Active Task Context Label -->
+<div class="w-full bg-surface-container-low p-2.5 rounded-lg mb-space-md">
+<span class="font-label-md text-label-md text-on-surface font-medium truncate block" id="active-task-label">
+              Finalizar arquitetura de dados do novo módulo
+            </span>
+</div>
+<!-- Circular Radial Countdown Progress Display -->
+<div class="relative w-48 h-48 my-space-xs flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<!-- Base Track -->
+<circle class="text-surface-container" cx="50" cy="50" fill="none" r="42" stroke="currentColor" stroke-width="5"></circle>
+<!-- Progress Arc (65% remaining) -->
+<circle class="text-primary transition-all duration-1000 ease-linear" cx="50" cy="50" fill="none" id="timer-progress-circle" r="42" stroke="currentColor" stroke-dasharray="264" stroke-dashoffset="65" stroke-linecap="round" stroke-width="5"></circle>
+</svg>
+<!-- Digits Display Inside Ring -->
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display text-display text-on-surface font-semibold tracking-tighter" id="timer-display">
+                25:00
+              </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider -mt-1">
+                Foco Ininterrupto
+              </span>
+</div>
+</div>
+<!-- Interactive Controls -->
+<div class="flex items-center justify-center gap-space-sm mt-space-md w-full">
+<button class="w-11 h-11 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant flex items-center justify-center transition-colors" id="reset-timer-btn" onclick="resetTimer()" title="Reiniciar bloco" type="button">
+<span class="material-symbols-outlined text-[20px]">restart_alt</span>
+</button>
+<button class="flex-1 py-3 px-space-md rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs transition-colors shadow-sm" id="main-timer-toggle-btn" onclick="toggleMainTimer()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="timer-btn-icon">play_arrow</span>
+<span id="timer-btn-text">Iniciar Sessão</span>
+</button>
+<button class="w-11 h-11 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant flex items-center justify-center transition-colors" onclick="triggerMicroBreak()" title="Pausa curta (5m)" type="button">
+<span class="material-symbols-outlined text-[20px]">coffee</span>
+</button>
+</div>
+<!-- Day Session Summary & Ambient Metrics -->
+<div class="w-full mt-space-lg pt-space-md flex items-center justify-around bg-surface-container-low/50 rounded-lg p-space-sm">
+<div class="flex flex-col items-center">
+<span class="font-title text-title text-primary font-semibold">4</span>
+<span class="font-label-sm text-label-sm text-secondary">Sessões hoje</span>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant/30"></div>
+<div class="flex flex-col items-center">
+<span class="font-title text-title text-on-surface font-semibold">1h 40m</span>
+<span class="font-label-sm text-label-sm text-secondary">Foco profundo</span>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant/30"></div>
+<div class="flex flex-col items-center">
+<span class="font-title text-title text-tertiary font-semibold">100%</span>
+<span class="font-label-sm text-label-sm text-secondary">Atenção plena</span>
+</div>
+</div>
+</div>
+<!-- Serene Workspace Visual Note -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-primary-fixed flex items-center justify-center text-on-primary-fixed flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">self_improvement</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Ritmo Biológico</span>
+<span class="font-body-md text-body-md text-on-surface-variant leading-tight">
+              Faça uma pausa de 5 minutos longe da tela ao terminar esta rodada.
+            </span>
+</div>
+</div>
+</aside>
+</div>
+<!-- Secondary Tasks Accordion: Low Cognitive Load / Background Chores -->
+<section class="mt-space-md bg-surface-container-lowest rounded-xl p-space-md md:p-space-lg shadow-sm">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs pb-space-sm">
+<div>
+<div class="flex items-center gap-space-xs">
+<h2 class="font-title text-title text-on-surface font-medium">Tarefas Secundárias</h2>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-low text-secondary font-medium">Baixo Peso</span>
+</div>
+<p class="font-body-md text-body-md text-secondary mt-0.5">
+            Atividades pontuais para quando sobrar energia após os 3 focos principais.
+          </p>
+</div>
+<button class="inline-flex items-center gap-1.5 px-space-sm py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors w-fit" onclick="toggleNewSecondaryInput()" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Nova secundária</span>
+</button>
+</div>
+<!-- Quick Creation Hidden Input Drawer -->
+<div class="hidden my-space-sm p-space-sm bg-surface-container-low rounded-lg flex items-center gap-space-sm" id="new-secondary-box">
+<input class="flex-1 bg-surface-container-lowest px-3 py-2 rounded-md font-body-md text-body-md text-on-surface outline-none" id="new-secondary-input" placeholder="Ex: Enviar comprovante ao contador..." type="text"/>
+<button class="px-space-md py-2 rounded-md bg-primary text-on-primary font-label-md text-label-md font-medium" onclick="addSecondaryTask()" type="button">
+          Guardar
+        </button>
+</div>
+<!-- Secondary Tasks List -->
+<div class="flex flex-col gap-space-xs mt-space-sm" id="secondary-tasks-list">
+<div class="flex items-center justify-between p-space-xs hover:bg-surface-container-low rounded-lg transition-colors group">
+<div class="flex items-center gap-space-sm min-w-0">
+<button aria-label="Concluir tarefa secundária" class="w-4 h-4 rounded bg-surface-container flex items-center justify-center text-transparent hover:text-outline transition-colors flex-shrink-0" onclick="toggleTaskStatus(this)" type="button">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</button>
+<span class="font-body-md text-body-md text-on-surface-variant truncate">
+              Responder e-mails de rotina (Inbox Zero)
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary flex-shrink-0 px-2">15m</span>
+</div>
+<div class="flex items-center justify-between p-space-xs hover:bg-surface-container-low rounded-lg transition-colors group">
+<div class="flex items-center gap-space-sm min-w-0">
+<button aria-label="Concluir tarefa secundária" class="w-4 h-4 rounded bg-surface-container flex items-center justify-center text-transparent hover:text-outline transition-colors flex-shrink-0" onclick="toggleTaskStatus(this)" type="button">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</button>
+<span class="font-body-md text-body-md text-on-surface-variant truncate">
+              Emitir notas fiscais pendentes
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary flex-shrink-0 px-2">10m</span>
+</div>
+<div class="flex items-center justify-between p-space-xs hover:bg-surface-container-low rounded-lg transition-colors group">
+<div class="flex items-center gap-space-sm min-w-0">
+<button aria-label="Concluir tarefa secundária" class="w-4 h-4 rounded bg-surface-container flex items-center justify-center text-transparent hover:text-outline transition-colors flex-shrink-0" onclick="toggleTaskStatus(this)" type="button">
+<span class="material-symbols-outlined text-[12px]">check</span>
+</button>
+<span class="font-body-md text-body-md text-on-surface-variant truncate">
+              Agendar consulta médica
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary flex-shrink-0 px-2">5m</span>
+</div>
+</div>
+</section>
+<!-- Visual Breathing Zone: Minimalist Inspiration -->
+<section class="py-space-md text-center flex flex-col items-center justify-center gap-1">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Filosofia FocoUm</span>
+<p class="font-body-md text-body-md text-on-surface-variant italic">
+        "Não é sobre fazer mais coisas, é sobre não deixar nada roubar o que importa."
+      </p>
+</section>
+</div>
+</div>
+<script>
+  let timerInterval = null;
+  let remainingSeconds = 25 * 60;
+  let totalSessionSeconds = 25 * 60;
+  let isTimerRunning = false;
+
+  const timerDisplay = document.getElementById('timer-display');
+  const timerBtnText = document.getElementById('timer-btn-text');
+  const timerBtnIcon = document.getElementById('timer-btn-icon');
+  const progressCircle = document.getElementById('timer-progress-circle');
+  const fullDashOffset = 264;
+
+  function updateTimerUI() {
+    const mins = Math.floor(remainingSeconds / 60);
+    const secs = remainingSeconds % 60;
+    timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    
+    // Update SVG Stroke
+    const progressFraction = remainingSeconds / totalSessionSeconds;
+    const currentOffset = fullDashOffset * (1 - progressFraction);
+    if (progressCircle) {
+      progressCircle.style.strokeDashoffset = currentOffset;
+    }
+  }
+
+  function toggleMainTimer() {
+    if (isTimerRunning) {
+      clearInterval(timerInterval);
+      isTimerRunning = false;
+      timerBtnText.textContent = "Continuar";
+      timerBtnIcon.textContent = "play_arrow";
+    } else {
+      isTimerRunning = true;
+      timerBtnText.textContent = "Pausar";
+      timerBtnIcon.textContent = "pause";
+      
+      timerInterval = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          updateTimerUI();
+        } else {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          timerBtnText.textContent = "Sessão Concluída";
+          timerBtnIcon.textContent = "check_circle";
+        }
+      }, 1000);
+    }
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+    remainingSeconds = 25 * 60;
+    totalSessionSeconds = 25 * 60;
+    timerBtnText.textContent = "Iniciar Sessão";
+    timerBtnIcon.textContent = "play_arrow";
+    updateTimerUI();
+  }
+
+  function triggerMicroBreak() {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+    remainingSeconds = 5 * 60;
+    totalSessionSeconds = 5 * 60;
+    document.getElementById('active-task-label').textContent = "☕ Pausa Consciente & Respiração (5m)";
+    timerBtnText.textContent = "Iniciar Pausa";
+    timerBtnIcon.textContent = "play_arrow";
+    updateTimerUI();
+  }
+
+  function syncMainTimer(mins, secs, taskTitle) {
+    clearInterval(timerInterval);
+    isTimerRunning = false;
+    remainingSeconds = (mins * 60) + secs;
+    totalSessionSeconds = remainingSeconds;
+    document.getElementById('active-task-label').textContent = taskTitle;
+    timerBtnText.textContent = "Iniciar Foco";
+    timerBtnIcon.textContent = "play_arrow";
+    updateTimerUI();
+    toggleMainTimer();
+  }
+
+  function toggleTaskStatus(btn) {
+    const isCompleted = btn.classList.contains('bg-primary');
+    if (isCompleted) {
+      btn.classList.remove('bg-primary', 'text-on-primary');
+      btn.classList.add('bg-surface-container-low', 'text-transparent');
+      const textElem = btn.nextElementSibling.querySelector('h2, h3, span');
+      if (textElem) {
+        textElem.classList.remove('line-through', 'opacity-50');
+      }
+    } else {
+      btn.classList.remove('bg-surface-container-low', 'text-transparent');
+      btn.classList.add('bg-primary', 'text-on-primary');
+      const textElem = btn.nextElementSibling.querySelector('h2, h3, span');
+      if (textElem) {
+        textElem.classList.add('line-through', 'opacity-50');
+      }
+    }
+  }
+
+  function toggleNewSecondaryInput() {
+    const box = document.getElementById('new-secondary-box');
+    box.classList.toggle('hidden');
+    if (!box.classList.contains('hidden')) {
+      document.getElementById('new-secondary-input').focus();
+    }
+  }
+
+  function addSecondaryTask() {
+    const input = document.getElementById('new-secondary-input');
+    const val = input.value.trim();
+    if (!val) return;
+
+    const list = document.getElementById('secondary-tasks-list');
+    const item = document.createElement('div');
+    item.className = 'flex items-center justify-between p-space-xs hover:bg-surface-container-low rounded-lg transition-colors group';
+    item.innerHTML = `
+      <div class="flex items-center gap-space-sm min-w-0">
+        <button 
+          type="button"
+          onclick="toggleTaskStatus(this)"
+          class="w-4 h-4 rounded bg-surface-container flex items-center justify-center text-transparent hover:text-outline transition-colors flex-shrink-0"
+          aria-label="Concluir tarefa secundária"
+        >
+          <span class="material-symbols-outlined text-[12px]">check</span>
+        </button>
+        <span class="font-body-md text-body-md text-on-surface-variant truncate">${val}</span>
+      </div>
+      <span class="font-label-sm text-label-sm text-secondary flex-shrink-0 px-2">10m</span>
+    `;
+    list.appendChild(item);
+    input.value = '';
+    document.getElementById('new-secondary-box').classList.add('hidden');
+  }
+
+  updateTimerUI();
+</script></main><footer class="w-full bg-surface border-t border-outline-variant/20 py-space-md"><div class="max-w-[960px] mx-auto px-gutter flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm"><span>FocoUm</span><span>•</span><span>Um foco essencial por vez. Menos ruído, mais profundidade.</span></div><div class="font-label-sm text-label-sm text-on-surface-variant/80">© 2025 FocoUm. Quiet Computing.</div></div></footer></body></html>

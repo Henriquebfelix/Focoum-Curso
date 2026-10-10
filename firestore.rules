@@ -1,0 +1,359 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model — FocoUm
+// ===============================================================
+//
+// Todos os dados vivem sob users/{uid}. A posse é garantida pelo caminho:
+// somente request.auth.uid == {uid} lê ou escreve qualquer coisa abaixo dele.
+//
+// Doc: users/{uid}                          (perfil, opcional)
+//   - displayName: string (obrigatório, 1..100)
+//   - email: string (obrigatório, == e-mail do token Google)
+//   - photoURL: string | null (opcional, <= 2048)
+//   - createdAt: timestamp (obrigatório, == request.time no create, imutável)
+//
+// Collection: users/{uid}/projects/{projectId}      (Onboarding)
+//   - name: string (obrigatório, 1..60)
+//   - color: string (obrigatório, hex "#RRGGBB")
+//   - active: bool (obrigatório)
+//   - createdAt: timestamp (obrigatório, == request.time no create, imutável)
+//
+// Doc: users/{uid}/settings/preferences             (Onboarding + Tema)
+//   - reviewTime: string (obrigatório, "HH:MM" 24h) — horário da Revisão Noturna
+//   - theme: string (obrigatório, "light" | "dark")
+//   - onboardingCompleted: bool (obrigatório)
+//   - timezone: string (opcional, <= 64, ex: "America/Sao_Paulo")
+//   - updatedAt: timestamp (obrigatório, == request.time)
+//
+// Doc: users/{uid}/settings/dailyFocus              (trava dos 3 focos)
+//   - slots: list<string> (obrigatório, EXATAMENTE 3 itens; "" = vaga livre)
+//   - date: string (obrigatório, "YYYY-MM-DD" — dia a que o plano se refere)
+//   - updatedAt: timestamp (obrigatório, == request.time)
+//   Não pode ser apagado (apagar e recriar burlaria a trava).
+//
+// Collection: users/{uid}/tasks/{taskId}
+//   - title: string (obrigatório, 1..200)
+//   - type: string (obrigatório, "foco" | "leve")
+//   - projectId: string (obrigatório, precisa existir em users/{uid}/projects)
+//   - completed: bool (obrigatório)
+//   - createdAt: timestamp (obrigatório, == request.time no create, imutável)
+//   - completedAt: timestamp | null (opcional; timestamp só se completed == true)
+//   - note: string (opcional, <= 500)
+//
+// Collection: users/{uid}/focusSessions/{sessionId}  (histórico imutável)
+//   - taskId: string (obrigatório, tarefa existente do usuário)
+//   - projectId: string (obrigatório, == projectId da tarefa)
+//   - taskTitle: string (opcional, 1..200, desnormalizado p/ histórico)
+//   - startedAt: timestamp (obrigatório, no máximo 7 dias atrás)
+//   - endedAt: timestamp (obrigatório, > startedAt, <= request.time)
+//   - durationSeconds: int (obrigatório, 1..14400, <= endedAt - startedAt)
+//   - status: string (obrigatório, "completed" | "paused" | "stopped")
+//
+// Collection: users/{uid}/nightReviews/{YYYY-MM-DD}
+//   - date: string (obrigatório, == ID do documento)
+//   - completedCount: int (obrigatório, 0..500)
+//   - pendingCount: int (obrigatório, 0..500)
+//   - tomorrowFocusTaskIds: list<string> (obrigatório, 0..3 itens)
+//   - reflection: string (opcional, <= 500)
+//   - createdAt: timestamp (obrigatório, imutável)
+//
+// ---------------------------------------------------------------
+// Invariante dos 3 focos (regra de negócio rígida, aplicada no banco)
+// ---------------------------------------------------------------
+// Toda tarefa com type == "foco" e completed == false PRECISA estar
+// listada em settings/dailyFocus.slots (que tem só 3 posições).
+//   - Criar/promover/reabrir uma tarefa de foco exige gravar, no MESMO
+//     batch/transação, o ID dela em uma vaga do dailyFocus (getAfter).
+//   - Uma vaga só pode ser liberada/substituída se a tarefa que estava
+//     nela, após o batch, não existir, não for mais "foco" ou estiver
+//     concluída.
+// Resultado: é impossível ter 4 focos pendentes, mesmo via API direta.
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =============================================================
+    // Helper Functions
+    // =============================================================
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function hasOnlyAllowedFields(required, optional) {
+      return incoming().keys().hasAll(required)
+        && incoming().keys().hasOnly(required.concat(optional));
+    }
+
+    function isStringBetween(value, minLen, maxLen) {
+      return value is string && value.size() >= minLen && value.size() <= maxLen;
+    }
+
+    function isOptionalString(field, maxLen) {
+      return !(field in incoming()) || isStringBetween(incoming()[field], 0, maxLen);
+    }
+
+    function isIdString(value) {
+      return isStringBetween(value, 1, 128);
+    }
+
+    function isDateKey(value) {
+      return value is string && value.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
+    }
+
+    function fieldUnchanged(field) {
+      return incoming()[field] == existing()[field];
+    }
+
+    function projectPath(userId, projectId) {
+      return /databases/$(database)/documents/users/$(userId)/projects/$(projectId);
+    }
+
+    function taskPath(userId, taskId) {
+      return /databases/$(database)/documents/users/$(userId)/tasks/$(taskId);
+    }
+
+    function dailyFocusPath(userId) {
+      return /databases/$(database)/documents/users/$(userId)/settings/dailyFocus;
+    }
+
+    // =============================================================
+    // Focus-limit helpers (invariante dos 3 focos)
+    // =============================================================
+
+    function isPendingFocus(data) {
+      return data.type == 'foco' && data.completed == false;
+    }
+
+    // Após o batch, o ID da tarefa ocupa uma das 3 vagas.
+    function holdsFocusSlotAfter(userId, taskId) {
+      return getAfter(dailyFocusPath(userId)).data.slots.hasAny([taskId]);
+    }
+
+    // Uma vaga antiga pode sair se continuar na lista (reordenação), estiver
+    // vazia, ou se a tarefa que a ocupava não for mais um foco pendente.
+    function slotReleased(userId, oldId) {
+      return oldId == ''
+        || incoming().slots.hasAny([oldId])
+        || !existsAfter(taskPath(userId, oldId))
+        || !isPendingFocus(getAfter(taskPath(userId, oldId)).data);
+    }
+
+    // =============================================================
+    // Domain Validators
+    // =============================================================
+
+    function isValidProfile() {
+      let data = incoming();
+      return hasOnlyAllowedFields(['displayName', 'email', 'createdAt'], ['photoURL'])
+        && isStringBetween(data.displayName, 1, 100)
+        && data.email == request.auth.token.email
+        && (!('photoURL' in data) || data.photoURL == null || isStringBetween(data.photoURL, 1, 2048))
+        && data.createdAt is timestamp;
+    }
+
+    function isValidProject() {
+      let data = incoming();
+      return hasOnlyAllowedFields(['name', 'color', 'active', 'createdAt'], [])
+        && isStringBetween(data.name, 1, 60)
+        && data.color is string && data.color.matches('^#[0-9A-Fa-f]{6}$')
+        && data.active is bool
+        && data.createdAt is timestamp;
+    }
+
+    function isValidPreferences() {
+      let data = incoming();
+      return hasOnlyAllowedFields(['reviewTime', 'theme', 'onboardingCompleted', 'updatedAt'], ['timezone'])
+        && data.reviewTime is string
+        && data.reviewTime.matches('^([01][0-9]|2[0-3]):[0-5][0-9]$')
+        && data.theme in ['light', 'dark']
+        && data.onboardingCompleted is bool
+        && isOptionalString('timezone', 64)
+        && data.updatedAt == request.time;
+    }
+
+    function isValidSlot(value) {
+      return value is string && value.size() <= 128;
+    }
+
+    function isValidDailyFocus() {
+      let data = incoming();
+      return hasOnlyAllowedFields(['slots', 'date', 'updatedAt'], [])
+        && data.slots is list
+        && data.slots.size() == 3
+        && isValidSlot(data.slots[0])
+        && isValidSlot(data.slots[1])
+        && isValidSlot(data.slots[2])
+        && isDateKey(data.date)
+        && data.updatedAt == request.time;
+    }
+
+    function isValidTask() {
+      let data = incoming();
+      return hasOnlyAllowedFields(
+          ['title', 'type', 'projectId', 'completed', 'createdAt'],
+          ['completedAt', 'note'])
+        && isStringBetween(data.title, 1, 200)
+        && data.type in ['foco', 'leve']
+        && isIdString(data.projectId)
+        && data.completed is bool
+        && data.createdAt is timestamp
+        && isOptionalString('note', 500)
+        && (!('completedAt' in data)
+            || data.completedAt == null
+            || (data.completed == true
+                && data.completedAt is timestamp
+                && data.completedAt <= request.time));
+    }
+
+    function isValidFocusSession() {
+      let data = incoming();
+      return hasOnlyAllowedFields(
+          ['taskId', 'projectId', 'startedAt', 'endedAt', 'durationSeconds', 'status'],
+          ['taskTitle'])
+        && isIdString(data.taskId)
+        && isIdString(data.projectId)
+        && (!('taskTitle' in data) || isStringBetween(data.taskTitle, 1, 200))
+        && data.startedAt is timestamp
+        && data.endedAt is timestamp
+        && data.startedAt > request.time - duration.value(7, 'd')
+        && data.endedAt > data.startedAt
+        && data.endedAt <= request.time
+        && data.durationSeconds is int
+        && data.durationSeconds > 0
+        && data.durationSeconds <= 14400
+        && data.durationSeconds <= (data.endedAt - data.startedAt).seconds() + 1
+        && data.status in ['completed', 'paused', 'stopped'];
+    }
+
+    function isValidNightReview(reviewId) {
+      let data = incoming();
+      return hasOnlyAllowedFields(
+          ['date', 'completedCount', 'pendingCount', 'tomorrowFocusTaskIds', 'createdAt'],
+          ['reflection'])
+        && isDateKey(reviewId)
+        && data.date == reviewId
+        && data.completedCount is int && data.completedCount >= 0 && data.completedCount <= 500
+        && data.pendingCount is int && data.pendingCount >= 0 && data.pendingCount <= 500
+        && data.tomorrowFocusTaskIds is list
+        && data.tomorrowFocusTaskIds.size() <= 3
+        && (data.tomorrowFocusTaskIds.size() < 1 || isIdString(data.tomorrowFocusTaskIds[0]))
+        && (data.tomorrowFocusTaskIds.size() < 2 || isIdString(data.tomorrowFocusTaskIds[1]))
+        && (data.tomorrowFocusTaskIds.size() < 3 || isIdString(data.tomorrowFocusTaskIds[2]))
+        && isOptionalString('reflection', 500)
+        && data.createdAt is timestamp;
+    }
+
+    // =============================================================
+    // Rules
+    // =============================================================
+
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && isValidProfile()
+        && incoming().createdAt == request.time;
+      allow update: if isOwner(userId)
+        && isValidProfile()
+        && fieldUnchanged('createdAt');
+      allow delete: if isOwner(userId);
+
+      // ---------- 1. Onboarding: projetos/matérias ----------
+      match /projects/{projectId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && isIdString(projectId)
+          && isValidProject()
+          && incoming().createdAt == request.time;
+        allow update: if isOwner(userId)
+          && isValidProject()
+          && fieldUnchanged('createdAt');
+        allow delete: if isOwner(userId);
+      }
+
+      // ---------- 1. Onboarding + Tema: preferências ----------
+      match /settings/preferences {
+        allow read: if isOwner(userId);
+        allow create, update: if isOwner(userId) && isValidPreferences();
+        allow delete: if isOwner(userId);
+      }
+
+      // ---------- 2. Trava dos 3 focos do dia ----------
+      match /settings/dailyFocus {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isValidDailyFocus();
+        allow update: if isOwner(userId)
+          && isValidDailyFocus()
+          && slotReleased(userId, existing().slots[0])
+          && slotReleased(userId, existing().slots[1])
+          && slotReleased(userId, existing().slots[2]);
+        allow delete: if false;
+      }
+
+      // ---------- 2. Tarefas (foco / leve) ----------
+      match /tasks/{taskId} {
+        allow read: if isOwner(userId);
+
+        allow create: if isOwner(userId)
+          && isIdString(taskId)
+          && isValidTask()
+          && incoming().createdAt == request.time
+          && exists(projectPath(userId, incoming().projectId))
+          && (!isPendingFocus(incoming()) || holdsFocusSlotAfter(userId, taskId));
+
+        allow update: if isOwner(userId)
+          && isValidTask()
+          && fieldUnchanged('createdAt')
+          && (fieldUnchanged('projectId') || exists(projectPath(userId, incoming().projectId)))
+          && (!isPendingFocus(incoming())
+              || isPendingFocus(existing())
+              || holdsFocusSlotAfter(userId, taskId));
+
+        allow delete: if isOwner(userId);
+      }
+
+      // ---------- 3. Sessões de Foco (histórico imutável) ----------
+      match /focusSessions/{sessionId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && isIdString(sessionId)
+          && isValidFocusSession()
+          && exists(taskPath(userId, incoming().taskId))
+          && get(taskPath(userId, incoming().taskId)).data.projectId == incoming().projectId;
+        allow update: if false;
+        allow delete: if isOwner(userId);
+      }
+
+      // ---------- 4. Revisão Noturna ----------
+      match /nightReviews/{reviewId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId)
+          && isValidNightReview(reviewId)
+          && incoming().createdAt == request.time;
+        allow update: if isOwner(userId)
+          && isValidNightReview(reviewId)
+          && fieldUnchanged('createdAt');
+        allow delete: if isOwner(userId);
+      }
+    }
+
+    // Default deny para qualquer caminho não mapeado.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

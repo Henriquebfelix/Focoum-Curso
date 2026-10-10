@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #ffffff;
+    --card-bg: #ffffff;
+    --card-subtle: #f0f3ff;
+    --border-subtle: rgba(109, 122, 119, 0.2);
+    --text-primary: #151c27;
+    --text-muted: #575e70;
+    --brand-primary: #0D9488;
+  }
+
+  .dark {
+    --bg-main: #0B1120;
+    --card-bg: #131B2E;
+    --card-subtle: #1E293B;
+    --border-subtle: #243048;
+    --text-primary: #F8FAFC;
+    --text-muted: #94A3B8;
+    --brand-primary: #14B8A6;
+    color-scheme: dark;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  body {
+    overscroll-behavior: none;
+  }
+}
+
+.dark body {
+  background-color: #0B1120;
+  color: #F8FAFC;
+}
+
+/* Glassmorphism and ambient shadows from Serene Focus */
+.shadow-soft {
+  box-shadow: 0 1px 3px rgba(17, 24, 39, 0.02), 0 4px 12px rgba(17, 24, 39, 0.03);
+}
+
+.dark .shadow-soft {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.shadow-focus {
+  box-shadow: 0 8px 30px rgba(13, 148, 136, 0.08);
+}
+
+.dark .shadow-focus {
+  box-shadow: 0 8px 30px rgba(20, 184, 166, 0.12);
+}
+
+/* Tabular figures for Pomodoro timer to prevent jitter */
+.timer-nums {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Smooth transitions */
+.theme-transition {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
